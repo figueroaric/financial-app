@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: brokers-service # This is the DNS name other services will use
+spec:
+  selector:
+    app: brokers-service
+  ports:
+  - protocol: TCP
+    port: 5000
+    targetPort: 5000

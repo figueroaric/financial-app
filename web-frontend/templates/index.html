@@ -1,0 +1,38 @@
+<!-- app/templates/index.html -->
+{% extends "_base.html" %}
+
+{% block content %}
+    <h1>Dashboard</h1>
+
+    <div class="card">
+        <h2>Existing Portfolios</h2>
+        {% if portfolios %}
+            <table>
+                <thead><tr><th>Name</th><th>Broker</th><th>Customer</th><th>Amount</th><th>Composition</th></tr></thead>
+                <tbody>
+                {% for p in portfolios %}
+                    <tr>
+                        <td>{{ p.name }}</td>
+                        <td>{{ p.broker_name }}</td>
+                        <td>{{ p.customer_name }}</td>
+                        <td>${{ "%.2f"|format(p.investment_amount) }}</td>
+                        <td>{{ p.composition }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>No portfolios created yet.</p>
+        {% endif %}
+    </div>
+
+    <div class="card">
+        <h2>Brokers</h2>
+        <ul>{% for b in brokers %}<li>{{ b.name }}</li>{% endfor %}</ul>
+    </div>
+
+    <div class="card">
+        <h2>Customers</h2>
+        <ul>{% for c in customers %}<li>{{ c.name }}</li>{% endfor %}</ul>
+    </div>
+{% endblock %}

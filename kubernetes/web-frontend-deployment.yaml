@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web-frontend-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: web-frontend
+  template:
+    metadata:
+      labels:
+        app: web-frontend
+    spec:
+      containers:
+      - name: web-frontend
+        image: web-frontend
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 5000
+        env:
+        # --- CRITICAL CHANGE ---
+        # We now use the Kubernetes service names for communication.
+        - name: BROKERS_API_URL
+          value: "http://brokers-service:5000/api/brokers"
+        - name: CUSTOMERS_API_URL
+          value: "http://customers-service:5000/api/customers"
+        - name: STOCKS_API_URL
+          value: "http://stocks-service:5000/api/stocks"
+        - name: PORTFOLIOS_API_URL
+          value: "http://portfolios-service:5000/api/portfolios"

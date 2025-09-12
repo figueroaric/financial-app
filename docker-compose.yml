@@ -1,0 +1,55 @@
+version: '3.8'
+
+services:
+  # The User-Facing Service
+  web-frontend:
+    build: ./web-frontend
+    container_name: web-frontend
+    ports:
+      - "5001:5000"
+    environment:
+      # URLs for the frontend to call the backend APIs
+      - BROKERS_API_URL=http://brokers-service:5000/api/brokers
+      - CUSTOMERS_API_URL=http://customers-service:5000/api/customers
+      - STOCKS_API_URL=http://stocks-service:5000/api/stocks
+      - PORTFOLIOS_API_URL=http://portfolios-service:5000/api/portfolios
+
+  # Backend API for managing Brokers
+  brokers-service:
+    build: ./brokers-service
+    container_name: brokers-service
+    environment:
+      - DB_USER=postgres
+      - DB_PASSWORD=KingChunk2025
+      - DB_HOST=host.docker.internal
+      - DB_NAME=financial_app_db
+
+  # Backend API for managing Customers
+  customers-service:
+    build: ./customers-service
+    container_name: customers-service
+    environment:
+      - DB_USER=postgres
+      - DB_PASSWORD=KingChunk2025
+      - DB_HOST=host.docker.internal
+      - DB_NAME=financial_app_db
+
+  # Backend API for managing Stocks
+  stocks-service:
+    build: ./stocks-service
+    container_name: stocks-service
+    environment:
+      - DB_USER=postgres
+      - DB_PASSWORD=KingChunk2025
+      - DB_HOST=host.docker.internal
+      - DB_NAME=financial_app_db
+
+  # Backend API for Portfolio logic
+  portfolios-service:
+    build: ./portfolios-service
+    container_name: portfolios-service
+    environment:
+      - DB_USER=postgres
+      - DB_PASSWORD=KingChunk2025
+      - DB_HOST=host.docker.internal
+      - DB_NAME=financial_app_db

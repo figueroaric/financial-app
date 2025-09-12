@@ -1,0 +1,55 @@
+<!-- app/templates/create_portfolio_step2.html -->
+{% extends "_base.html" %}
+
+{% block content %}
+    <h1>Portfolio Options</h1>
+    <p>Based on your selections, here are two optimal portfolios from the efficient frontier.</p>
+
+    <div class="card">
+        <h2>Option 1: {{ options.max_sharpe.name }}</h2>
+        <p>This portfolio is optimized for the best risk-adjusted return.</p>
+        <ul>
+            <li><strong>Expected Annual Return:</strong> {{ (options.max_sharpe.return * 100)|round(2) }}%</li>
+            <li><strong>Annual Volatility (Risk):</strong> {{ (options.max_sharpe.volatility * 100)|round(2) }}%</li>
+            <li><strong>Sharpe Ratio:</strong> {{ options.max_sharpe.sharpe_ratio }}</li>
+        </ul>
+        <h3>Composition:</h3>
+        <ul>
+            {% for ticker, weight in options.max_sharpe.weights.items() %}
+                <li><strong>{{ ticker }}:</strong> {{ (weight * 100)|round(2) }}%</li>
+            {% endfor %}
+        </ul>
+        <form action="{{ url_for('save_portfolio') }}" method="POST">
+            <input type="hidden" name="broker_id" value="{{ original_data.broker_id }}">
+            <input type="hidden" name="customer_id" value="{{ original_data.customer_id }}">
+            <input type="hidden" name="investment_amount" value="{{ original_data.investment_amount }}">
+            <input type="hidden" name="composition" value='{{ options.max_sharpe.weights|tojson }}''>
+            <input type="text" name="portfolio_name" placeholder="Enter a name for this portfolio" required>
+            <button type="submit">Select & Save This Portfolio</button>
+        </form>
+    </div>
+
+    <div class="card">
+        <h2>Option 2: {{ options.min_vol.name }}</h2>
+        <p>This portfolio is optimized for the lowest possible risk.</p>
+        <ul>
+            <li><strong>Expected Annual Return:</strong> {{ (options.min_vol.return * 100)|round(2) }}%</li>
+            <li><strong>Annual Volatility (Risk):</strong> {{ (options.min_vol.volatility * 100)|round(2) }}%</li>
+            <li><strong>Sharpe Ratio:</strong> {{ options.min_vol.sharpe_ratio }}</li>
+        </ul>
+        <h3>Composition:</h3>
+        <ul>
+            {% for ticker, weight in options.min_vol.weights.items() %}
+                <li><strong>{{ ticker }}:</strong> {{ (weight * 100)|round(2) }}%</li>
+            {% endfor %}
+        </ul>
+        <form action="{{ url_for('save_portfolio') }}" method="POST">
+            <input type="hidden" name="broker_id" value="{{ original_data.broker_id }}">
+            <input type="hidden" name="customer_id" value="{{ original_data.customer_id }}">
+            <input type="hidden" name="investment_amount" value="{{ original_data.investment_amount }}">
+            <input type="hidden" name="composition" value='{{ options.min_vol.weights|tojson }}'>
+            <input type="text" name="portfolio_name" placeholder="Enter a name for this portfolio" required>
+            <button type="submit">Select & Save This Portfolio</button>
+        </form>
+    </div>
+{% endblock %}

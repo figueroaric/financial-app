@@ -1,0 +1,44 @@
+<!-- app/templates/manage_data.html -->
+{% extends "_base.html" %}
+
+{% block content %}
+    <h1>Manage Data</h1>
+
+    <div class="card">
+        <h2>Add Broker</h2>
+        <form method="POST">
+            <label for="broker_name">Broker Name:</label>
+            <input type="text" id="broker_name" name="broker_name" required>
+            <button type="submit">Add Broker</button>
+        </form>
+    </div>
+
+    <div class="card">
+        <h2>Add Customer</h2>
+        <form method="POST">
+            <label for="customer_name">Customer Name:</label>
+            <input type="text" id="customer_name" name="customer_name" required>
+            <button type="submit">Add Customer</button>
+        </form>
+    </div>
+
+    <div class="card">
+        <h2>Add Stock</h2>
+        <form method="POST">
+            <label for="stock_ticker">Stock Ticker (e.g., AAPL):</label>
+            <input type="text" id="stock_ticker" name="stock_ticker" required>
+            <label for="company_name">Company Name (Optional):</label>
+            <input type="text" id="company_name" name="company_name">
+            <button type="submit">Add Stock</button>
+        </form>
+        <hr>
+        <h3>Existing Stocks</h3>
+        <ul>
+            {% for stock in stocks %}
+                <li>{{ stock.ticker }}</li>
+            {% else %}
+                <li>No stocks added yet.</li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}

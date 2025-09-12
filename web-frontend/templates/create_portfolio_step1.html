@@ -1,0 +1,35 @@
+<!-- app/templates/create_portfolio_step1.html -->
+{% extends "_base.html" %}
+
+{% block content %}
+    <h1>Create a New Portfolio</h1>
+    <div class="card">
+        <form method="POST">
+            <label for="broker_id">Select Broker:</label>
+            <select id="broker_id" name="broker_id" required>
+                {% for b in brokers %}<option value="{{ b.id }}">{{ b.name }}</option>{% endfor %}
+            </select>
+
+            <label for="customer_id">Select Customer:</label>
+            <select id="customer_id" name="customer_id" required>
+                {% for c in customers %}<option value="{{ c.id }}">{{ c.name }}</option>{% endfor %}
+            </select>
+
+            <label for="investment_amount">Investment Amount ($):</label>
+            <input type="number" id="investment_amount" name="investment_amount" step="0.01" required>
+
+            <label>Select Stocks (at least 2):</label>
+            <select name="tickers" multiple size="8" required>
+                {% for stock in stocks %}<option value="{{ stock.ticker }}">{{ stock.ticker }}</option>{% endfor %}
+            </select>
+
+            <label for="start_date">Start Date for Analysis:</label>
+            <input type="date" id="start_date" name="start_date" required>
+            
+            <label for="end_date">End Date for Analysis:</label>
+            <input type="date" id="end_date" name="end_date" required>
+
+            <button type="submit">Analyze & Get Options</button>
+        </form>
+    </div>
+{% endblock %}

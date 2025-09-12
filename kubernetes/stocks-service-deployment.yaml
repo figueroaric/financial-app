@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: stocks-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: stocks-service
+  template:
+    metadata:
+      labels:
+        app: stocks-service
+    spec:
+      containers:
+      - name: stocks-service
+        image: stocks-service
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 5000
+        env:
+        - name: DB_USER
+          value: "postgres"
+        - name: DB_PASSWORD
+          value: "KingChunk2025"
+        - name: DB_HOST
+          value: "host.docker.internal"
+        - name: DB_NAME
+          value: "financial_app_db"
