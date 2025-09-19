@@ -14,8 +14,11 @@ spec:
     spec:
       containers:
       - name: portfolios-service
-        image: portfolios-service
-        imagePullPolicy: Never
+        #image: portfolios-service
+        #imagePullPolicy: Never
+        #Changing to pull from Docker Repository
+        image: richo0830/portfolios-service:latest
+        imagePullPolicy: Always
         ports:
         - containerPort: 5000
         env:

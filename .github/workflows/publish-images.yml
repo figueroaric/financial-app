@@ -1,0 +1,36 @@
+name: Build and Push Docker Images
+
+on:
+  push:
+    branches:
+      - main # This workflow runs on every push to the main branch
+
+jobs:
+  build_and_push:
+    runs-on: ubuntu-latest
+    
+    # Define a matrix to run the same steps for each service
+    strategy:
+      matrix:
+        service: [brokers-service, customers-service, stocks-service, portfolios-service, web-frontend]
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+
+    - name: Log in to Docker Hub
+      uses: docker/login-action@v3
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+    - name: Build and push Docker image for ${{ matrix.service }}
+      uses: docker/build-push-action@v5
+      with:
+        context: ./${{ matrix.service }} # Path to the service's Dockerfile
+        file: ./${{ matrix.service }}/Dockerfile
+        push: true
+        tags: ${{ secrets.DOCKERHUB_USERNAME }}/${{ matrix.service }}:latest

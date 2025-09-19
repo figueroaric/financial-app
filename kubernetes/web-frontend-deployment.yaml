@@ -14,8 +14,11 @@ spec:
     spec:
       containers:
       - name: web-frontend
-        image: web-frontend
-        imagePullPolicy: Never
+        #image: web-frontend
+        #imagePullPolicy: Never
+        #Changing to pull from Docker Repository
+        image: richo0830/web-frontend:latest
+        imagePullPolicy: Always
         ports:
         - containerPort: 5000
         env:

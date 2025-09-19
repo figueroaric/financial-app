@@ -14,8 +14,11 @@ spec:
     spec:
       containers:
       - name: brokers-service
-        image: brokers-service  # Local image name
-        imagePullPolicy: Never
+        #image: brokers-service  # Local image name
+        #imagePullPolicy: Never
+        #Changing to pull from Docker Repository
+        image: richo0830/brokers-service:latest
+        imagePullPolicy: Always
         ports:
         - containerPort: 5000
         env:

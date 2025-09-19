@@ -14,8 +14,12 @@ spec:
     spec:
       containers:
       - name: stocks-service
-        image: stocks-service
-        imagePullPolicy: Never
+        #image: stocks-service
+        #imagePullPolicy: Never
+        #Changing to pull from Docker Repository
+        image: richo0830/stocks-service:latest
+        imagePullPolicy: Always
+
         ports:
         - containerPort: 5000
         env:

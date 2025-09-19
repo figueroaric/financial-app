@@ -14,8 +14,11 @@ spec:
     spec:
       containers:
       - name: customers-service
-        image: customers-service
-        imagePullPolicy: Never
+        #image: customers-service
+        #imagePullPolicy: Never
+        #Changing to pull from Docker Repository
+        image: richo0830/customers-service:latest
+        imagePullPolicy: Always
         ports:
         - containerPort: 5000
         env:
